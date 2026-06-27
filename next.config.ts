@@ -1,7 +1,18 @@
+import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Pin the workspace root to this project. A stray lockfile exists in a parent
+  // directory, so Turbopack would otherwise infer the wrong root.
+  turbopack: {
+    root: path.join(__dirname),
+  },
+  async redirects() {
+    return [
+      // Default locale: send the bare root to Uzbek.
+      { source: "/", destination: "/uz", permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;

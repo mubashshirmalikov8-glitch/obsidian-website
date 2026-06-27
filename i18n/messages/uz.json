@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "OBSIDIAN — Marketplace ta'lim va konsalting",
+    "description": "OBSIDIAN — yetti mutaxassisdan iborat jamoa sotuvchini noldan marketplace’da kengaytirishgacha olib boradi: strategiya, logistika, kontent, SEO, reklama, yuridik tuzilma va AI avtomatlashtirish."
+  },
+  "brand": {
+    "name": "OBSIDIAN",
+    "tagline": "Marketplace ta'lim va konsalting"
+  },
+  "nav": {
+    "team": "Jamoa",
+    "cases": "Natijalar",
+    "services": "Xizmatlar",
+    "contact": "Aloqa"
+  },
+  "hero": {
+    "eyebrow": "MARKETPLACE TA'LIM VA KONSALTING",
+    "title": "Sotuvchilarni marketplace yetakchilariga aylantiramiz.",
+    "subtitle": "Yetti mutaxassis. Bitta maqsad — sizni birinchi kartochkadan to katta va daromadli marketplace biznesigacha olib chiqish.",
+    "cta": "Jamoani ko‘rish",
+    "scrollHint": "Pastga suring"
+  },
+  "team": {
+    "label": "02 — JAMOA",
+    "title": "Bir jamoa. Yetti mutaxassis.",
+    "intro": "Har bir mutaxassis sizning marketplace yo‘lingizning bir bosqichiga javobgar.",
+    "stationLabel": "Bekat",
+    "soon": "Immersiv sahna keyingi bosqichda paydo bo‘ladi",
+    "members": [
+      { "name": "Rashid Xolmirzayev", "role": "Asoschi va Marketplace strategiyasi" },
+      { "name": "Zafarbek", "role": "Cargo va Fulfillment" },
+      { "name": "Muhammad Ali", "role": "Foto va Infografika" },
+      { "name": "Asilbek", "role": "SEO va Kartochka optimizatsiyasi" },
+      { "name": "Behruz", "role": "Mahsulot tahlili va Reklama" },
+      { "name": "Xusan", "role": "Yuridik tuzilma va Qirg‘iziston" },
+      { "name": "Mubashshir", "role": "AI avtomatlashtirish muhandisi va Web-ilova dasturchisi" }
+    ],
+    "rashidBeats": [
+      { "step": "Boshlanish", "title": "Bozor rastasidan", "body": "Rashid an’anaviy savdodan — rastalar, naqd pul va sezgidan boshlagan. OBSIDIAN tarixi shu yerdan boshlanadi." },
+      { "step": "Inqiroz", "title": "170 000$ qarz", "body": "Inqiroz uni 170 000$ qarz bilan qoldirdi — hammasi xavf ostida, xatoga o‘rin yo‘q edi." },
+      { "step": "17 m²", "title": "Moskvada 17 m²", "body": "U Moskvadagi bitta 17 m² xonadan qayta boshladi — har bir javon o‘z o‘rnini oqladi." },
+      { "step": "Ko‘lam", "title": "Ikkita ombor", "body": "Intizomli tizimlar o‘sha xonani ikkita to‘liq ishlaydigan omborga aylantirdi." },
+      { "step": "O‘tish", "title": "Nega marketplace", "body": "U an’anaviy biznes cheklovlaridan marketplace qamrovi va imkoniyatlariga o‘tdi." },
+      { "step": "Qiyos", "title": "Bozor va marketplace", "body": "Qat’iy xarajatlar, mahalliy qamrov va taxmin — ma’lumotlar, ko‘lam va butun mamlakat auditoriyasiga qarshi." },
+      { "step": "Kelajak", "title": "Savdo onlaynga o‘tmoqda", "body": "Mijoz allaqachon onlayn. Chakana savdoning kelajagi — jismoniy emas, raqamli javonlarda." },
+      { "step": "Xulosa", "title": "Keyin nima qilish kerak", "body": "Tejamkor boshlang, raqamlarni egallang va tizim quring — u endi sotuvchilarga o‘rgatadigan yo‘l." }
+    ],
+    "mubashshirBeats": [
+      { "step": "AI yadro", "title": "Jarayonlarni boshqaradigan AI", "body": "Mubashshir zamonaviy AI yordamida biznes jarayonlarini avtomatlashtiradi va raqamlashtiradi — vaqtni tejaydi, nazoratni kuchaytiradi." },
+      { "step": "Telegram", "title": "Telegram botlar", "body": "Buyurtmalar, bildirishnomalar va mijozlar oqimini kechayu kunduz boshqaradigan botlar." },
+      { "step": "Dashboardlar", "title": "Jonli dashboardlar", "body": "Real vaqt dashboardlari tarqoq ma'lumotlarni bir qarashda qarorlarga aylantiradi." },
+      { "step": "Sheets", "title": "Google Sheets integratsiyasi", "body": "Vositalaringiz va do‘koningiz to‘g‘ridan-to‘g‘ri Google Sheets bilan — avtomatik sinxron." },
+      { "step": "Web-ilova", "title": "Web-ilovalar", "body": "Biznesingiz uchun shaxsiy boshqaruv paneli bo‘lgan maxsus web-ilovalar." },
+      { "step": "Raqamli", "title": "To‘liq raqamlashtirish", "body": "AI, botlar, dashboardlar va ilovalar — do‘koningizni boshqaradigan yagona tizimga ulangan." }
+    ]
+  },
+  "form": {
+    "eyebrow": "05 — ANKETA",
+    "title": "Yuksalishni boshlang.",
+    "subtitle": "To‘rtta qisqa savol. Davom etish uchun ularni to‘ldiring.",
+    "step": "Bosqich",
+    "of": "/",
+    "next": "Davom etish",
+    "back": "Orqaga",
+    "submit": "Yuborish",
+    "submitting": "Yuborilmoqda…",
+    "enterHint": "Enter ↵ bosing",
+    "errors": {
+      "name": "Iltimos, ismingizni kiriting",
+      "phone": "To‘g‘ri telefon raqamini kiriting",
+      "choice": "Iltimos, variantni tanlang",
+      "network": "Xatolik yuz berdi. Qayta urinib ko‘ring."
+    },
+    "fields": {
+      "name": { "q": "Sizga qanday murojaat qilaylik?", "ph": "Ismingiz" },
+      "phone": { "q": "Telefon raqamingiz", "ph": "+998 90 123 45 67" },
+      "gender": {
+        "q": "Jinsingiz",
+        "options": { "male": "Erkak", "female": "Ayol", "other": "Boshqa" }
+      },
+      "age": {
+        "q": "Yoshingiz",
+        "options": { "under18": "18 dan kichik", "18_24": "18–24", "25_34": "25–34", "35_44": "35–44", "45_plus": "45+" }
+      },
+      "activity": {
+        "q": "O‘zingizni qanday ta’riflaysiz?",
+        "options": {
+          "not_selling": "Hali sotmayman",
+          "selling": "Marketplace’da sotaman",
+          "offline": "Offline biznesim bor",
+          "other": "Boshqa"
+        }
+      },
+      "interest": {
+        "q": "Sizni nima ko‘proq qiziqtiradi?",
+        "options": {
+          "online_course": "Online kurs",
+          "offline_course": "Offline kurs",
+          "consultation": "Konsultatsiya",
+          "ai_automation": "AI avtomatlashtirish",
+          "fulfillment": "Fulfillment",
+          "seo": "SEO va kartochkalar",
+          "advertising": "Reklama / DRR",
+          "telegram_bot": "Telegram bot",
+          "web_app": "Web-ilova"
+        }
+      }
+    },
+    "success": {
+      "title": "Arizangiz qabul qilindi.",
+      "subtitle": "Jamoamiz tez orada siz bilan bog‘lanadi.",
+      "again": "Yana bir javob yuborish"
+    }
+  },
+  "services": {
+    "label": "03 — XIZMATLAR",
+    "title": "Marketplace’da g‘alaba uchun barchasi.",
+    "intro": "Butun yo‘l davomida bitta jamoa — birinchi kartochkadan to to‘liq avtomatlashtirilgan do‘kongacha.",
+    "items": [
+      { "title": "Online kurs", "desc": "Tizimli, o‘z sur’atingizdagi ta’lim." },
+      { "title": "Offline kurs", "desc": "Jamoa bilan jonli intensiv." },
+      { "title": "Konsultatsiya", "desc": "Do‘koningiz uchun individual sessiyalar." },
+      { "title": "AI avtomatlashtirish", "desc": "Jarayonlarni AI bilan avtomatlashtirish." },
+      { "title": "Telegram botlar", "desc": "Buyurtma, bildirishnoma va qo‘llab-quvvatlash." },
+      { "title": "Web-ilovalar", "desc": "Biznesingiz uchun maxsus panellar." },
+      { "title": "Dashboardlar", "desc": "Real vaqtdagi analitika." },
+      { "title": "Infografika", "desc": "Sotuvga olib keladigan kartochkalar." },
+      { "title": "SEO va kartochka", "desc": "Marketplace qidiruvida yuqoriroq." },
+      { "title": "Fulfillment", "desc": "Cargo, qadoqlash, markirovka, yetkazib berish." },
+      { "title": "Reklama / DRR", "desc": "Reklama kampaniyalari va DRR tahlili." }
+    ]
+  },
+  "results": {
+    "label": "04 — NATIJALAR",
+    "title": "Va’da emas, isbot.",
+    "intro": "Buni allaqachon bosib o‘tgan jamoadan haqiqiy raqamlar.",
+    "stats": [
+      { "value": "$170K", "label": "Yuqoriga yo‘lda yopilgan qarz" },
+      { "value": "2", "label": "Ishlayotgan ombor" },
+      { "value": "7", "label": "Bitta jamoadagi mutaxassis" },
+      { "value": "17 m²", "label": "Hammasi shu yerdan boshlandi" }
+    ]
+  },
+  "cta": {
+    "label": "06 — BOSHLASH",
+    "title": "Marketplace biznesingizni kengaytirishga tayyormisiz?",
+    "subtitle": "Ariza qoldiring yoki kurs tanlang — jamoamiz siz bilan shaxsan bog‘lanadi.",
+    "consult": "Konsultatsiya olish",
+    "buyCourse": "Kurs sotib olish",
+    "courseTitle": "Formatni tanlang",
+    "online": "Online",
+    "offline": "Offline",
+    "onlineDesc": "O‘z sur’atingizda, istalgan joyda o‘rganing.",
+    "offlineDesc": "Jamoa bilan jonli intensiv.",
+    "tariffsTitle": "Tarifni tanlang",
+    "start": "Start",
+    "pro": "Pro",
+    "premium": "Premium",
+    "startDesc": "Boshlash uchun zarur narsalar.",
+    "proDesc": "Kengaytirish uchun barchasi.",
+    "premiumDesc": "To‘liq qo‘llab-quvvatlash bilan.",
+    "select": "Tanlash",
+    "back": "Orqaga"
+  },
+  "footer": {
+    "tagline": "Birinchi kartochkadan to katta marketplace biznesigacha.",
+    "rights": "Barcha huquqlar himoyalangan.",
+    "madeBy": "Shijoatli sotuvchilar uchun yaratilgan."
+  }
+}

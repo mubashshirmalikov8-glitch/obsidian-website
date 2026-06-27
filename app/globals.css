@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Cosmic Landing — design tokens (Tailwind v4 @theme).
+  Dark premium cosmic palette: deep void base, dual accent (ion-cyan + ember),
+  with violet/nebula depth tones. Generates utilities like bg-void, text-ion, etc.
+*/
+@theme {
+  --color-void: #05060a;
+  --color-abyss: #0a0c14;
+  --color-surface: #0e1018;
+  --color-nebula: #2a1a4a;
+  --color-nebula-deep: #1b1036;
+  --color-violet: #3b1e6e;
+  --color-ion: #5ee6ff;
+  --color-ion-soft: #9af1ff;
+  --color-ember: #ff6a3d;
+  --color-magenta: #ff3d7f;
+  --color-starlight: #eaf0ff;
+  --color-dust: #8a93ad;
+  --color-dust-dim: #565d72;
+
+  --shadow-glow-ion: 0 0 40px -8px rgba(94, 230, 255, 0.45);
+  --shadow-glow-ember: 0 0 40px -8px rgba(255, 106, 61, 0.5);
 }
 
+/* Fonts come from next/font (variables set on <html>). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-unbounded);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--color-void);
+  /* Lenis drives scroll; keep native scrollbar out of the way visually. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dust-dim) transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* No opaque background here — the fixed WebGL canvas + its CSS nebula sit
+     behind the content and must remain visible. html provides the backdrop. */
+  background-color: transparent;
+  color: var(--color-starlight);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-ion) 35%, transparent);
+  color: var(--color-starlight);
+}
+
+/* Lenis recommended base styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Onboarding gate active — lock page scroll behind the questionnaire. */
+html.gated,
+html.gated body {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
 }

@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "title": "OBSIDIAN — Marketplace Education & Consulting",
+    "description": "OBSIDIAN — a team of seven specialists guiding sellers from zero to scaled on marketplaces: strategy, logistics, content, SEO, advertising, legal structure and AI automation."
+  },
+  "brand": {
+    "name": "OBSIDIAN",
+    "tagline": "Marketplace education & consulting"
+  },
+  "nav": {
+    "team": "Team",
+    "cases": "Results",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "MARKETPLACE EDUCATION & CONSULTING",
+    "title": "We turn sellers into marketplace leaders.",
+    "subtitle": "Seven specialists. One mission — to take you from your first listing to a scaled, profitable marketplace business.",
+    "cta": "View the team",
+    "scrollHint": "Scroll to begin"
+  },
+  "team": {
+    "label": "02 — TEAM",
+    "title": "One team. Seven specialists.",
+    "intro": "Each specialist owns a stage of your marketplace journey.",
+    "stationLabel": "Station",
+    "soon": "Immersive scene arriving next phase",
+    "members": [
+      { "name": "Rashid Kholmirzaev", "role": "Founder & Marketplace Strategy" },
+      { "name": "Zafarbek", "role": "Cargo & Fulfillment" },
+      { "name": "Muhammad Ali", "role": "Photo & Infographics" },
+      { "name": "Asilbek", "role": "SEO & Card Optimization" },
+      { "name": "Behruz", "role": "Product Research & Advertising" },
+      { "name": "Khusan", "role": "Legal Structure & Kyrgyzstan" },
+      { "name": "Mubashshir", "role": "AI Automation Engineer & Web App Developer" }
+    ],
+    "rashidBeats": [
+      { "step": "Origin", "title": "From the bazaar floor", "body": "Rashid started in traditional trade — stalls, cash and instinct. This is where the OBSIDIAN story begins." },
+      { "step": "The crisis", "title": "$170,000 in debt", "body": "A crisis left him $170,000 in debt, with everything on the line and no room for error." },
+      { "step": "17 m²", "title": "17 m² in Moscow", "body": "He rebuilt from a single 17 m² room in Moscow — every shelf earning its place." },
+      { "step": "Scale", "title": "Two warehouses", "body": "Disciplined systems turned that room into two fully operating warehouses." },
+      { "step": "The shift", "title": "Why I chose marketplaces", "body": "He left the limits of traditional business for the reach and leverage of marketplaces." },
+      { "step": "Versus", "title": "Bazaar vs marketplace", "body": "Fixed costs, local reach and guesswork — versus data, scale and a national audience." },
+      { "step": "The future", "title": "Commerce is moving online", "body": "The customer is already online. The future of retail is digital shelves, not physical ones." },
+      { "step": "Takeaways", "title": "What to do next", "body": "Start lean, master the numbers, and build systems — the same path he now teaches sellers." }
+    ],
+    "mubashshirBeats": [
+      { "step": "AI core", "title": "AI that runs your operations", "body": "Mubashshir automates and digitizes business processes with modern AI — saving time and tightening control." },
+      { "step": "Telegram", "title": "Telegram bots", "body": "Custom bots that handle orders, alerts and customer flows around the clock." },
+      { "step": "Dashboards", "title": "Live dashboards", "body": "Real-time dashboards that turn scattered data into decisions at a glance." },
+      { "step": "Sheets", "title": "Google Sheets integration", "body": "Your tools and stores wired straight into Google Sheets — synced automatically." },
+      { "step": "Web apps", "title": "Web applications", "body": "Tailored web applications that give your business its own control panel." },
+      { "step": "Digital", "title": "Full digitalization", "body": "AI, bots, dashboards and apps connected into one system that runs your store." }
+    ]
+  },
+  "form": {
+    "eyebrow": "05 — ENROLLMENT",
+    "title": "Begin your ascent.",
+    "subtitle": "Four quick questions to unlock the experience.",
+    "step": "Step",
+    "of": "of",
+    "next": "Continue",
+    "back": "Back",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "enterHint": "press Enter ↵",
+    "errors": {
+      "name": "Please enter your name",
+      "phone": "Enter a valid phone number",
+      "choice": "Please choose an option",
+      "network": "Something went wrong. Please try again."
+    },
+    "fields": {
+      "name": { "q": "What should we call you?", "ph": "Your name" },
+      "phone": { "q": "Your phone number", "ph": "+998 90 123 45 67" },
+      "gender": {
+        "q": "Your gender",
+        "options": { "male": "Male", "female": "Female", "other": "Other" }
+      },
+      "age": {
+        "q": "Your age",
+        "options": { "under18": "Under 18", "18_24": "18–24", "25_34": "25–34", "35_44": "35–44", "45_plus": "45+" }
+      },
+      "activity": {
+        "q": "What best describes you?",
+        "options": {
+          "not_selling": "Not selling yet",
+          "selling": "Already selling on marketplaces",
+          "offline": "I have an offline business",
+          "other": "Something else"
+        }
+      },
+      "interest": {
+        "q": "What are you most interested in?",
+        "options": {
+          "online_course": "Online course",
+          "offline_course": "Offline course",
+          "consultation": "Consultation",
+          "ai_automation": "AI automation",
+          "fulfillment": "Fulfillment",
+          "seo": "SEO & cards",
+          "advertising": "Advertising / DRR",
+          "telegram_bot": "Telegram bot",
+          "web_app": "Web application"
+        }
+      }
+    },
+    "success": {
+      "title": "Your application has been received.",
+      "subtitle": "Our team will contact you shortly.",
+      "again": "Submit another response"
+    }
+  },
+  "services": {
+    "label": "03 — SERVICES",
+    "title": "Everything you need to win on marketplaces.",
+    "intro": "One team covering the full journey — from your first listing to a fully automated store.",
+    "items": [
+      { "title": "Online course", "desc": "Structured, self-paced marketplace training." },
+      { "title": "Offline course", "desc": "Hands-on, in-person intensive with the team." },
+      { "title": "Consultation", "desc": "1-on-1 strategy sessions for your store." },
+      { "title": "AI automation", "desc": "Automate operations with modern AI." },
+      { "title": "Telegram bots", "desc": "Bots for orders, alerts and support." },
+      { "title": "Web applications", "desc": "Custom control panels for your business." },
+      { "title": "Dashboards", "desc": "Real-time analytics at a glance." },
+      { "title": "Infographics", "desc": "Product cards that convert." },
+      { "title": "SEO & card optimization", "desc": "Rank higher in marketplace search." },
+      { "title": "Fulfillment", "desc": "Cargo, packaging, labeling, delivery." },
+      { "title": "Advertising / DRR", "desc": "Ad campaigns and DRR analysis." }
+    ]
+  },
+  "results": {
+    "label": "04 — RESULTS",
+    "title": "Proof, not promises.",
+    "intro": "Real numbers from a team that has already done it.",
+    "stats": [
+      { "value": "$170K", "label": "Debt cleared on the way up" },
+      { "value": "2", "label": "Operating warehouses" },
+      { "value": "7", "label": "Specialists in one team" },
+      { "value": "17 m²", "label": "Where it all started" }
+    ]
+  },
+  "cta": {
+    "label": "06 — START",
+    "title": "Ready to scale your marketplace business?",
+    "subtitle": "Leave a request or pick a course — our team reaches out to you personally.",
+    "consult": "Get a consultation",
+    "buyCourse": "Buy a course",
+    "courseTitle": "Choose your format",
+    "online": "Online",
+    "offline": "Offline",
+    "onlineDesc": "Learn at your own pace, anywhere.",
+    "offlineDesc": "In-person intensive with the team.",
+    "tariffsTitle": "Choose a plan",
+    "start": "Start",
+    "pro": "Pro",
+    "premium": "Premium",
+    "startDesc": "The essentials to launch.",
+    "proDesc": "Everything you need to scale.",
+    "premiumDesc": "Full done-with-you support.",
+    "select": "Select",
+    "back": "Back"
+  },
+  "footer": {
+    "tagline": "From the first listing to a scaled marketplace business.",
+    "rights": "All rights reserved.",
+    "madeBy": "Crafted for ambitious sellers."
+  }
+}
