@@ -10,6 +10,7 @@ import { Backdrop } from "@/components/ui/Backdrop";
 import { Nav } from "@/components/ui/Nav";
 import { Footer } from "@/components/ui/Footer";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
+import { MobileCta } from "@/components/ui/MobileCta";
 
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -81,6 +82,7 @@ export default async function LocaleLayout({
             <Nav />
             <main className="relative z-10">{children}</main>
             <Footer />
+            <MobileCta />
             <GrainOverlay />
           </AppProviders>
         </DictionaryProvider>

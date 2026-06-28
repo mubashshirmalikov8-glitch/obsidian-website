@@ -89,15 +89,27 @@ export function Hero() {
           {dict.hero.subtitle}
         </motion.p>
 
-        {/* CTA */}
+        {/* CTA — primary lead path + secondary team-discovery (kept as ghost) */}
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.0, delay: 0.78, ease: EASE_REVEAL }}
-          className="mt-12"
+          className="mt-12 flex flex-col items-center gap-3.5 sm:flex-row sm:justify-center"
         >
           <MagneticButton
+            href="#enroll"
+            variant="primary"
+            onClick={(e) => {
+              e.preventDefault();
+              track("cta_click", { location: "hero", label: "consult", target: "#enroll" });
+              scrollToSection("#enroll");
+            }}
+          >
+            {dict.cta.consult}
+          </MagneticButton>
+          <MagneticButton
             href="#team"
+            variant="ghost"
             onClick={(e) => {
               e.preventDefault();
               track("cta_click", { location: "hero", label: "view_team", target: "#team" });
