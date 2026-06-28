@@ -13,6 +13,7 @@ import {
 } from "@/lib/lead-schema";
 import { cn } from "@/lib/cn";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -41,6 +42,8 @@ export function Questionnaire() {
   const [values, setValues] = useState<Values>({});
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
+  // Honeypot: bots fill this hidden field, humans never see it.
+  const [website, setWebsite] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const step = LEAD_STEPS[stepIndex];
@@ -54,6 +57,12 @@ export function Questionnaire() {
       return () => clearTimeout(t);
     }
   }, [stepIndex, isText]);
+
+  // Funnel: record each step the user actually sees.
+  useEffect(() => {
+    track("questionnaire_step_view", { step, index: stepIndex });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stepIndex]);
 
   function goTo(next: number, dir: number) {
     setDirection(dir);
@@ -78,6 +87,7 @@ export function Questionnaire() {
       setError(form.errors.choice);
       return;
     }
+    track("questionnaire_field_complete", { step, index: stepIndex });
     if (isLast) void submit(values);
     else goTo(stepIndex + 1, 1);
   }
@@ -86,14 +96,17 @@ export function Questionnaire() {
     const next = { ...values, [step]: value };
     setValues(next);
     setError(null);
+    track("questionnaire_field_complete", { step, index: stepIndex });
     if (isLast) void submit(next);
     else setTimeout(() => goTo(stepIndex + 1, 1), 240);
   }
 
   async function submit(payload: Values) {
+    track("questionnaire_submit_attempt");
     const parsed = leadSchema.safeParse({ ...payload, locale });
     if (!parsed.success) {
       setError(form.errors.network);
+      track("questionnaire_submit_error", { reason: "client_validation" });
       return;
     }
     setStatus("submitting");
@@ -102,22 +115,28 @@ export function Questionnaire() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(parsed.data satisfies LeadInput),
+        // `website` is the honeypot; empty for real users, stripped server-side.
+        body: JSON.stringify({ ...(parsed.data satisfies LeadInput), website }),
       });
       const data = (await res.json().catch(() => null)) as { ok?: boolean } | null;
-      if (res.ok && data?.ok) setStatus("success");
-      else {
+      if (res.ok && data?.ok) {
+        setStatus("success");
+        track("questionnaire_submit_success");
+      } else {
         setStatus("error");
         setError(form.errors.network);
+        track("questionnaire_submit_error", { reason: `http_${res.status}` });
       }
     } catch {
       setStatus("error");
       setError(form.errors.network);
+      track("questionnaire_submit_error", { reason: "network" });
     }
   }
 
   function reset() {
     setValues({});
+    setWebsite("");
     setStepIndex(0);
     setDirection(-1);
     setStatus("idle");
@@ -154,6 +173,21 @@ export function Questionnaire() {
               />
             ) : (
               <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                {/* Honeypot — visually hidden, off the tab order, ignored by AT.
+                    Real users never fill it; bots do → server drops the lead. */}
+                <div aria-hidden className="pointer-events-none absolute -left-[9999px] top-0 h-px w-px overflow-hidden opacity-0">
+                  <label htmlFor="company-website">Company website</label>
+                  <input
+                    id="company-website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
+
                 <div className="mb-10 flex items-center gap-4">
                   <div className="flex flex-1 gap-1.5">
                     {LEAD_STEPS.map((s, i) => (

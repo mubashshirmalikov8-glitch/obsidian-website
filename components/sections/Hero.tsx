@@ -6,6 +6,7 @@ import { useDictionary } from "@/i18n/dictionary-context";
 import { HeroWave } from "@/components/hero/HeroWave";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { scrollToSection } from "@/lib/lenis-instance";
+import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 
 export function Hero() {
@@ -99,6 +100,7 @@ export function Hero() {
             href="#team"
             onClick={(e) => {
               e.preventDefault();
+              track("cta_click", { location: "hero", label: "view_team", target: "#team" });
               scrollToSection("#team");
             }}
           >

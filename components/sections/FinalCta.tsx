@@ -6,6 +6,7 @@ import { useDictionary } from "@/i18n/dictionary-context";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { scrollToSection } from "@/lib/lenis-instance";
+import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
@@ -73,10 +74,22 @@ export function FinalCta() {
                   {...fade}
                   className="flex flex-col items-center justify-center gap-4 sm:flex-row"
                 >
-                  <MagneticButton onClick={goEnroll} variant="primary">
+                  <MagneticButton
+                    onClick={() => {
+                      track("cta_click", { location: "final_cta", label: "consult" });
+                      goEnroll();
+                    }}
+                    variant="primary"
+                  >
                     {c.consult}
                   </MagneticButton>
-                  <MagneticButton onClick={() => setPhase("format")} variant="ghost">
+                  <MagneticButton
+                    onClick={() => {
+                      track("cta_click", { location: "final_cta", label: "buy_course" });
+                      setPhase("format");
+                    }}
+                    variant="ghost"
+                  >
                     {c.buyCourse}
                   </MagneticButton>
                 </motion.div>
@@ -89,13 +102,19 @@ export function FinalCta() {
                     <OptionCard
                       title={c.online}
                       desc={c.onlineDesc}
-                      onClick={() => setPhase("tariff")}
+                      onClick={() => {
+                        track("course_format_click", { format: "online" });
+                        setPhase("tariff");
+                      }}
                       select={c.select}
                     />
                     <OptionCard
                       title={c.offline}
                       desc={c.offlineDesc}
-                      onClick={() => setPhase("tariff")}
+                      onClick={() => {
+                        track("course_format_click", { format: "offline" });
+                        setPhase("tariff");
+                      }}
                       select={c.select}
                     />
                   </div>
@@ -110,18 +129,32 @@ export function FinalCta() {
                     back={c.back}
                   />
                   <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <OptionCard title={c.start} desc={c.startDesc} onClick={goEnroll} select={c.select} />
+                    <OptionCard
+                      title={c.start}
+                      desc={c.startDesc}
+                      onClick={() => {
+                        track("course_tariff_click", { tariff: "start" });
+                        goEnroll();
+                      }}
+                      select={c.select}
+                    />
                     <OptionCard
                       title={c.pro}
                       desc={c.proDesc}
-                      onClick={goEnroll}
+                      onClick={() => {
+                        track("course_tariff_click", { tariff: "pro" });
+                        goEnroll();
+                      }}
                       select={c.select}
                       featured
                     />
                     <OptionCard
                       title={c.premium}
                       desc={c.premiumDesc}
-                      onClick={goEnroll}
+                      onClick={() => {
+                        track("course_tariff_click", { tariff: "premium" });
+                        goEnroll();
+                      }}
                       select={c.select}
                     />
                   </div>
