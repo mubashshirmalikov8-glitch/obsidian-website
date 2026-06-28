@@ -40,6 +40,12 @@ function looksSpammy(name: string): boolean {
   return false;
 }
 
+// True when an insert failed only because the format/tariff columns are absent.
+function isMissingIntentColumn(err: { code?: string; message?: string }): boolean {
+  if (err.code === "PGRST204" || err.code === "42703") return true;
+  return /\b(format|tariff)\b/i.test(err.message ?? "");
+}
+
 export async function POST(req: Request) {
   const ip = clientIp(req);
   if (rateLimited(ip)) {
@@ -102,7 +108,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, stored: false });
   }
 
-  const { error } = await supabase.from("leads").insert(lead);
+  let { error } = await supabase.from("leads").insert(lead);
+
+  // If the DB hasn't been migrated for the intent columns yet, don't lose the
+  // lead — store the core fields and warn to run the migration. (PostgREST
+  // reports an unknown column as PGRST204 / Postgres 42703.)
+  if (error && isMissingIntentColumn(error)) {
+    console.warn(
+      "[lead] format/tariff columns missing — run supabase/migrations/0001_lead_intent.sql. Storing core lead for now.",
+      error.message,
+    );
+    const { format: _f, tariff: _t, ...core } = lead;
+    void _f;
+    void _t;
+    ({ error } = await supabase.from("leads").insert(core));
+  }
+
   if (error) {
     console.error("[lead] insert failed:", error.message);
     return NextResponse.json({ error: "db_error" }, { status: 500 });

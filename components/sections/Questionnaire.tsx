@@ -13,6 +13,7 @@ import {
 } from "@/lib/lead-schema";
 import { cn } from "@/lib/cn";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { useLeadIntent } from "@/lib/lead-intent";
 import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 
@@ -28,6 +29,8 @@ const TEXT_STEPS = new Set<LeadStep>(["name", "phone"]);
 export function Questionnaire() {
   const { dict, locale } = useDictionary();
   const form = dict.form;
+  // Course intent carried over from the Final CTA (format + tariff), if any.
+  const intent = useLeadIntent();
 
   // Crisp step transition: x + opacity slide, no blur. Reduced motion → opacity only.
   const reduce = useReducedMotion();
@@ -103,7 +106,8 @@ export function Questionnaire() {
 
   async function submit(payload: Values) {
     track("questionnaire_submit_attempt");
-    const parsed = leadSchema.safeParse({ ...payload, locale });
+    // Merge in any course intent (format/tariff) selected in the Final CTA.
+    const parsed = leadSchema.safeParse({ ...payload, locale, ...intent });
     if (!parsed.success) {
       setError(form.errors.network);
       track("questionnaire_submit_error", { reason: "client_validation" });

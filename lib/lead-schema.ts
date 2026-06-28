@@ -15,6 +15,11 @@ export const AGE_RANGES = [
 
 export const LOCALES = ["uz", "ru", "en"] as const;
 
+/** Course intent carried over from the Final CTA (optional — consult-only and
+ *  direct questionnaire leads have none). */
+export const FORMATS = ["online", "offline"] as const;
+export const TARIFFS = ["start", "pro", "premium"] as const;
+
 export const leadSchema = z.object({
   name: z.string().trim().min(2, "name").max(80, "name"),
   phone: z
@@ -26,6 +31,8 @@ export const leadSchema = z.object({
   gender: z.enum(GENDERS),
   age: z.enum(AGE_RANGES),
   locale: z.enum(LOCALES).optional(),
+  format: z.enum(FORMATS).optional(),
+  tariff: z.enum(TARIFFS).optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;

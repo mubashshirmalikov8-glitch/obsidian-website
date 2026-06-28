@@ -6,6 +6,7 @@ import { useDictionary } from "@/i18n/dictionary-context";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { scrollToSection } from "@/lib/lenis-instance";
+import { setLeadIntent } from "@/lib/lead-intent";
 import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 import { cn } from "@/lib/cn";
@@ -103,6 +104,7 @@ export function FinalCta() {
                       title={c.online}
                       desc={c.onlineDesc}
                       onClick={() => {
+                        setLeadIntent({ format: "online" });
                         track("course_format_click", { format: "online" });
                         setPhase("tariff");
                       }}
@@ -112,6 +114,7 @@ export function FinalCta() {
                       title={c.offline}
                       desc={c.offlineDesc}
                       onClick={() => {
+                        setLeadIntent({ format: "offline" });
                         track("course_format_click", { format: "offline" });
                         setPhase("tariff");
                       }}
@@ -133,6 +136,7 @@ export function FinalCta() {
                       title={c.start}
                       desc={c.startDesc}
                       onClick={() => {
+                        setLeadIntent({ tariff: "start" });
                         track("course_tariff_click", { tariff: "start" });
                         goEnroll();
                       }}
@@ -142,6 +146,7 @@ export function FinalCta() {
                       title={c.pro}
                       desc={c.proDesc}
                       onClick={() => {
+                        setLeadIntent({ tariff: "pro" });
                         track("course_tariff_click", { tariff: "pro" });
                         goEnroll();
                       }}
@@ -152,6 +157,7 @@ export function FinalCta() {
                       title={c.premium}
                       desc={c.premiumDesc}
                       onClick={() => {
+                        setLeadIntent({ tariff: "premium" });
                         track("course_tariff_click", { tariff: "premium" });
                         goEnroll();
                       }}

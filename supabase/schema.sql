@@ -13,6 +13,8 @@ create table if not exists public.leads (
   gender      text        not null,
   age         text        not null,
   locale      text,
+  format      text,        -- course intent from the Final CTA: online | offline
+  tariff      text,        -- course intent from the Final CTA: start | pro | premium
   source      text        default 'onboarding',
   user_agent  text
 );
