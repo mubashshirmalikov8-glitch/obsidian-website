@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { EASE_REVEAL } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
 /** Shared eyebrow + title + intro header with an in-view reveal. */
@@ -20,12 +21,12 @@ export function SectionHeader({
       initial={{ opacity: 0, y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.7, ease: EASE_REVEAL }}
       className="mx-auto max-w-3xl text-center"
     >
       <span
         className={cn(
-          "font-mono text-[11px] uppercase tracking-[0.3em]",
+          "font-mono text-[11px] uppercase tracking-label",
           accent === "ember" ? "text-ember" : "text-ion",
         )}
       >

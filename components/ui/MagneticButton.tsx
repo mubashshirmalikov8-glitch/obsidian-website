@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { cn } from "@/lib/cn";
 
 type MagneticButtonProps = {
@@ -26,12 +26,14 @@ export function MagneticButton({
   strength = 0.4,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 200, damping: 15, mass: 0.3 });
   const sy = useSpring(y, { stiffness: 200, damping: 15, mass: 0.3 });
 
   function handleMove(e: React.PointerEvent) {
+    if (reduce) return; // no magnetic pull under reduced motion
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

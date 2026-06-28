@@ -22,6 +22,47 @@
 
   --shadow-glow-ion: 0 0 40px -8px rgba(94, 230, 255, 0.45);
   --shadow-glow-ember: 0 0 40px -8px rgba(255, 106, 61, 0.5);
+
+  /* ---- Design System v2 — shared tokens ---------------------------------- */
+  /* Glass fills + hairline borders (tiers 1–3 from DS §5) */
+  --color-glass-1: rgba(255, 255, 255, 0.025);
+  --color-glass-2: rgba(255, 255, 255, 0.04);
+  --color-glass-3: rgba(255, 255, 255, 0.06);
+  --color-hairline: rgba(255, 255, 255, 0.08);
+  --color-hairline-strong: rgba(255, 255, 255, 0.16);
+
+  /* Text ramp + selected-control fill */
+  --color-muted: #7c8398; /* AA-safe small functional text (DS §1.3) */
+  --color-control-selected: rgba(94, 230, 255, 0.14); /* ion @ 14% — active control */
+
+  /* Easing (DS §8.1) */
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1); /* signature entrance */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* hover / state */
+
+  /* Letter spacing (DS §3) */
+  --tracking-wordmark: 0.2em;
+  --tracking-label: 0.28em;
+  --tracking-meta: 0.2em;
+
+  /* Elevation — floating nav (DS §6) */
+  --shadow-nav: inset 0 1px 0 0 rgba(255, 255, 255, 0.07), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+  --shadow-nav-scrolled: inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
+    0 14px 38px -16px rgba(0, 0, 0, 0.72);
+
+  /* Radius (DS §4) — role tokens; named to avoid clobbering Tailwind's built-in
+     rounded-sm/md/lg/xl scale that Hero/Nav rely on. */
+  --radius-inset: 12px; /* DS radius/sm — inner frames, chips */
+  --radius-stat: 20px; /* DS radius/lg — stat & option cards */
+  --radius-card: 24px; /* DS radius/xl — feature cards */
+
+  /* Elevation ladder (DS §6). elev/2 carries the accent ring at 18%; ion + ember
+     variants so the ring matches the card's accent. */
+  --shadow-elev-1: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 30px 60px -34px rgba(0, 0, 0, 0.85);
+  --shadow-elev-2-ion: inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 46px 90px -36px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(94, 230, 255, 0.18);
+  --shadow-elev-2-ember: inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 46px 90px -36px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 106, 61, 0.18);
+  --shadow-elev-3: inset 0 1px 0 0 rgba(255, 255, 255, 0.07), 0 36px 100px -44px rgba(0, 0, 0, 0.85);
 }
 
 /* Fonts come from next/font (variables set on <html>). */
@@ -79,6 +120,16 @@ html.gated body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  /* Keep gentle opacity fades, but resolve all transform/filter/colour changes
+     instantly so no animated movement (hover lifts, zooms, sheen sweeps, blur)
+     remains. Transform *values* are preserved, so positioning (e.g. the off-screen
+     card sheen) never flashes on screen. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-property: opacity !important;
   }
 }
 

@@ -17,7 +17,7 @@ export function Footer() {
             {dict.footer.tagline}
           </p>
         </div>
-        <div className="text-sm text-dust-dim sm:text-right">
+        <div className="text-sm text-muted sm:text-right">
           <p>{dict.footer.madeBy}</p>
           <p className="mt-1 font-mono text-xs">
             © {year} {dict.brand.name}. {dict.footer.rights}

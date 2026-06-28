@@ -6,17 +6,16 @@ import { useDictionary } from "@/i18n/dictionary-context";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { scrollToSection } from "@/lib/lenis-instance";
+import { EASE_REVEAL } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
 type Phase = "idle" | "format" | "tariff";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const fade = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -16 },
-  transition: { duration: 0.45, ease: EASE },
+  transition: { duration: 0.45, ease: EASE_REVEAL },
 };
 
 export function FinalCta() {
@@ -29,7 +28,7 @@ export function FinalCta() {
   }
 
   return (
-    <section id="cta" className="relative px-6 py-28 sm:py-36">
+    <section id="cta" className="relative overflow-x-clip px-6 py-28 sm:py-36">
       <SectionHeader label={c.label} title={c.title} intro={c.subtitle} accent="ember" />
 
       <div className="relative mx-auto mt-14 max-w-3xl">
@@ -48,8 +47,8 @@ export function FinalCta() {
           initial={{ opacity: 0, y: 26 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-2xl [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.07),0_36px_100px_-44px_rgba(0,0,0,0.85)] sm:p-10"
+          transition={{ duration: 0.7, ease: EASE_REVEAL }}
+          className="relative overflow-hidden rounded-[28px] border border-hairline bg-white/[0.04] p-8 shadow-elev-3 backdrop-blur-2xl sm:p-10"
         >
           {/* soft inner top light */}
           <span
@@ -150,11 +149,11 @@ function Stepline({
       <button
         type="button"
         onClick={onBack}
-        className="font-mono text-xs uppercase tracking-[0.2em] text-dust transition-colors hover:text-starlight"
+        className="rounded font-mono text-xs uppercase tracking-[0.2em] text-dust outline-none transition-colors hover:text-starlight focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void"
       >
         ← {back}
       </button>
-      <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-dust-dim">
+      <span className="font-mono text-[11px] uppercase tracking-label text-muted">
         {title}
       </span>
     </div>
@@ -179,10 +178,10 @@ function OptionCard({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border p-6 text-left backdrop-blur-xl transition-all duration-300 ease-out hover:-translate-y-1",
+        "group relative overflow-hidden rounded-stat border p-6 text-left outline-none backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard hover:-translate-y-1.5 focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
         featured
-          ? "border-ember/40 bg-ember/[0.06] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.08),var(--shadow-glow-ember)] hover:border-ember/60"
-          : "border-white/10 bg-white/[0.04] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.05)] hover:border-white/25 hover:bg-white/[0.07] hover:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.09),0_30px_60px_-36px_rgba(0,0,0,0.85)]",
+          ? "border-ember/40 bg-ember/[0.06] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.08),var(--shadow-glow-ember)] hover:border-ember/60 hover:shadow-elev-2-ember"
+          : "border-hairline bg-glass-2 shadow-elev-1 hover:border-hairline-strong hover:bg-glass-3 hover:shadow-elev-2-ion",
       )}
     >
       <h3 className="font-display text-xl font-semibold text-starlight">{title}</h3>

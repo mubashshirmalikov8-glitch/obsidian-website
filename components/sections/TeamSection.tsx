@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { useDictionary } from "@/i18n/dictionary-context";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { EASE_REVEAL } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
 /** Founder (Rashid) + AI engineer (Mubashshir) carry the warm ember accent. */
@@ -38,14 +40,14 @@ export function TeamSection() {
   const members = dict.team.members;
 
   return (
-    <section id="team" className="relative px-6 py-28 sm:py-36">
+    <section id="team" className="relative px-6 py-28 sm:py-32">
       <SectionHeader
         label={dict.team.label}
         title={dict.team.title}
         intro={dict.team.intro}
       />
 
-      <div className="relative mx-auto mt-16 flex max-w-6xl flex-wrap justify-center gap-5 sm:gap-6">
+      <div className="relative mx-auto mt-16 flex max-w-6xl flex-wrap justify-center gap-6">
         {members.map((m, i) => (
           <TeamCard
             key={i}
@@ -81,15 +83,12 @@ function TeamCard({
     <motion.article
       initial={{ opacity: 0, y: 44 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, delay, ease: EASE_REVEAL }}
       className={cn(
-        "group relative w-full overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 ease-out",
-        "hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05]",
-        "[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.06),0_30px_60px_-34px_rgba(0,0,0,0.85)]",
-        flagship
-          ? "hover:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.1),0_46px_90px_-36px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,138,92,0.2)]"
-          : "hover:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.1),0_46px_90px_-36px_rgba(0,0,0,0.9),0_0_0_1px_rgba(94,230,255,0.2)]",
+        "group relative w-full overflow-hidden rounded-card border border-hairline bg-glass-2 shadow-elev-1 backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard",
+        "hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3",
+        flagship ? "hover:shadow-elev-2-ember" : "hover:shadow-elev-2-ion",
         "sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]",
       )}
     >
@@ -97,7 +96,7 @@ function TeamCard({
       <div className="relative aspect-[4/5] overflow-hidden">
         {/* duotone placeholder base — gently zooms on hover */}
         <div
-          className="absolute inset-0 transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+          className="absolute inset-0 transition-transform duration-[1200ms] ease-standard group-hover:scale-[1.06]"
           style={{
             background: flagship
               ? "radial-gradient(135% 100% at 28% 12%, #2c2014 0%, #150e0a 52%, #07080d 100%)"
@@ -111,7 +110,7 @@ function TeamCard({
           style={{ background: "radial-gradient(58% 36% at 30% 2%, rgba(255,255,255,0.07), transparent 72%)" }}
         />
         {/* monogram placeholder (hidden once a real photo loads on top) */}
-        <span className="absolute inset-0 flex items-center justify-center pb-5 font-display text-[5.75rem] font-semibold leading-none text-white/[0.07] transition-all duration-700 ease-out group-hover:scale-[1.07] group-hover:text-white/[0.11]">
+        <span className="absolute inset-0 flex items-center justify-center pb-5 font-display text-[5.75rem] font-semibold leading-none text-white/[0.07] transition-[transform,color] duration-700 ease-standard group-hover:scale-[1.07] group-hover:text-white/[0.11]">
           {initials(name)}
         </span>
 
@@ -131,24 +130,24 @@ function TeamCard({
         {/* thin inner frame */}
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-3 rounded-[14px] border border-white/[0.07]"
+          className="pointer-events-none absolute inset-3 rounded-inset border border-white/[0.07]"
         />
         {/* corner index with accent tick */}
-        <span className="absolute left-4 top-4 flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] text-white/55">
+        <span className="absolute left-4 top-4 flex items-center gap-2 font-mono text-[11px] tracking-label text-white/55">
           <span className={cn("h-px w-4", flagship ? "bg-ember/60" : "bg-ion/60")} />
           {String(index + 1).padStart(2, "0")}
         </span>
         {/* accent line */}
         <span
           className={cn(
-            "absolute inset-x-5 bottom-0 h-px origin-center scale-x-75 opacity-60 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100",
+            "absolute inset-x-5 bottom-0 h-px origin-center scale-x-75 opacity-60 transition-[transform,opacity] duration-500 ease-standard group-hover:scale-x-100 group-hover:opacity-100",
             flagship
               ? "bg-gradient-to-r from-transparent via-ember to-transparent"
               : "bg-gradient-to-r from-transparent via-ion to-transparent",
           )}
         />
         {/* hover sheen */}
-        <span className="pointer-events-none absolute inset-0 -translate-x-[130%] skew-x-12 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-[130%]" />
+        <span className="pointer-events-none absolute inset-0 -translate-x-[130%] skew-x-12 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent transition-transform duration-[900ms] ease-standard group-hover:translate-x-[130%]" />
       </div>
 
       {/* ---- Info ---- */}
@@ -194,18 +193,19 @@ function CardPhoto({
 
   if (state === "error") return null;
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       ref={ref}
       src={src}
       alt={alt}
-      loading="lazy"
-      decoding="async"
+      fill
+      // Cards render at ~350–400px across breakpoints; let the optimizer pick a
+      // matched (DPR-aware) width rather than shipping the full-res source.
+      sizes="(max-width: 639px) 90vw, (max-width: 1023px) 45vw, 380px"
       onLoad={() => setState("loaded")}
       onError={() => setState("error")}
       style={{ objectPosition: position }}
       className={cn(
-        "absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[1200ms] ease-out group-hover:scale-[1.06]",
+        "object-cover transition-[opacity,transform] duration-[1200ms] ease-standard group-hover:scale-[1.06]",
         state === "loaded" ? "opacity-100" : "opacity-0",
       )}
     />

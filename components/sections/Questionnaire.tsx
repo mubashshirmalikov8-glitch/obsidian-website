@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react";
 import { useDictionary } from "@/i18n/dictionary-context";
 import {
   LEAD_STEPS,
@@ -13,17 +13,12 @@ import {
 } from "@/lib/lead-schema";
 import { cn } from "@/lib/cn";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { EASE_REVEAL } from "@/lib/motion";
 
 type Status = "idle" | "submitting" | "success" | "error";
 type Values = Partial<Record<LeadStep, string>>;
 
 const TEXT_STEPS = new Set<LeadStep>(["name", "phone"]);
-
-const stepVariants: Variants = {
-  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 44 : -44, filter: "blur(6px)" }),
-  center: { opacity: 1, x: 0, filter: "blur(0px)" },
-  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -44 : 44, filter: "blur(6px)" }),
-};
 
 /**
  * In-page lead-capture questionnaire (4 steps → Supabase). Premium glass console
@@ -32,6 +27,14 @@ const stepVariants: Variants = {
 export function Questionnaire() {
   const { dict, locale } = useDictionary();
   const form = dict.form;
+
+  // Crisp step transition: x + opacity slide, no blur. Reduced motion → opacity only.
+  const reduce = useReducedMotion();
+  const stepVariants: Variants = {
+    enter: (dir: number) => ({ opacity: 0, x: reduce ? 0 : dir > 0 ? 44 : -44 }),
+    center: { opacity: 1, x: 0 },
+    exit: (dir: number) => ({ opacity: 0, x: reduce ? 0 : dir > 0 ? -44 : 44 }),
+  };
 
   const [stepIndex, setStepIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -128,7 +131,7 @@ export function Questionnaire() {
     >
       <div className="w-full max-w-xl">
         <div className="mb-10 text-center">
-          <span className="font-mono text-[11px] uppercase tracking-[0.32em] text-ion/90">
+          <span className="font-mono text-[11px] uppercase tracking-label text-ion/90">
             {form.eyebrow}
           </span>
           <h2 className="mt-4 text-balance font-display text-[clamp(2rem,4.6vw,3.2rem)] font-semibold leading-[1.08] tracking-tight text-starlight">
@@ -139,7 +142,7 @@ export function Questionnaire() {
           </p>
         </div>
 
-        <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-2xl [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.07),0_36px_100px_-44px_rgba(0,0,0,0.85)] sm:p-12">
+        <div className="relative overflow-hidden rounded-[28px] border border-hairline bg-white/[0.04] p-8 shadow-elev-3 backdrop-blur-2xl sm:p-12">
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <SuccessPanel
@@ -157,13 +160,13 @@ export function Questionnaire() {
                       <span
                         key={s}
                         className={cn(
-                          "h-[3px] flex-1 rounded-full transition-colors duration-500 ease-out",
+                          "h-[3px] flex-1 rounded-full transition-colors duration-500 ease-standard",
                           i <= stepIndex ? "bg-ion/70" : "bg-white/10",
                         )}
                       />
                     ))}
                   </div>
-                  <span className="font-mono text-[11px] tracking-[0.2em] text-dust-dim tabular-nums">
+                  <span className="font-mono text-[11px] tracking-[0.2em] text-muted tabular-nums">
                     {String(stepIndex + 1).padStart(2, "0")} / {String(LEAD_STEPS.length).padStart(2, "0")}
                   </span>
                 </div>
@@ -177,7 +180,7 @@ export function Questionnaire() {
                       initial="enter"
                       animate="center"
                       exit="exit"
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: EASE_REVEAL }}
                     >
                       <label
                         htmlFor={isText ? `q-${step}` : undefined}
@@ -217,7 +220,7 @@ export function Questionnaire() {
                                 onClick={() => selectChoice(opt)}
                                 aria-pressed={isSel}
                                 className={cn(
-                                  "rounded-xl border px-4 py-4 text-center text-sm transition-all duration-300 ease-out",
+                                  "rounded-xl border px-4 py-4 text-center text-sm outline-none transition-[transform,border-color,background-color,color,box-shadow] duration-300 ease-standard focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
                                   isSel
                                     ? "border-ion/55 bg-ion/[0.08] text-starlight"
                                     : "border-white/10 bg-white/[0.02] text-dust hover:border-white/25 hover:bg-white/[0.04] hover:text-starlight",
@@ -241,7 +244,7 @@ export function Questionnaire() {
                     onClick={() => stepIndex > 0 && goTo(stepIndex - 1, -1)}
                     disabled={stepIndex === 0}
                     className={cn(
-                      "font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300",
+                      "rounded font-mono text-[11px] uppercase tracking-[0.22em] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
                       stepIndex === 0
                         ? "cursor-not-allowed text-dust-dim/30"
                         : "text-dust hover:text-starlight",
@@ -258,7 +261,7 @@ export function Questionnaire() {
                 </div>
 
                 {isText && (
-                  <p className="mt-5 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-dust-dim/45">
+                  <p className="mt-5 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                     {form.enterHint}
                   </p>
                 )}
@@ -286,13 +289,13 @@ function SuccessPanel({
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: EASE_REVEAL }}
       className="flex flex-col items-center py-10 text-center"
     >
       <motion.div
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ delay: 0.1, duration: 0.6, ease: EASE_REVEAL }}
         className="flex h-16 w-16 items-center justify-center rounded-full border border-ion/35 bg-ion/[0.06]"
       >
         <svg width="30" height="30" viewBox="0 0 34 34" fill="none" aria-hidden>
@@ -314,7 +317,7 @@ function SuccessPanel({
       <button
         type="button"
         onClick={onAgain}
-        className="mt-9 font-mono text-[11px] uppercase tracking-[0.22em] text-dust-dim transition-colors duration-300 hover:text-ion"
+        className="mt-9 font-mono text-[11px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-ion"
       >
         {again}
       </button>

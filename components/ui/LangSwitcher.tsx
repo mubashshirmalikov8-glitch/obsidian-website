@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "motion/react";
 import { localeLabels, isLocale, type Locale } from "@/i18n/config";
+import { EASE_STANDARD } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
 /**
@@ -28,7 +30,7 @@ export function LangSwitcher({ active }: { active: Locale }) {
 
   return (
     <div
-      className="flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.04] p-0.5 backdrop-blur-xl"
+      className="flex items-center gap-0.5 rounded-full border border-hairline bg-glass-1 p-0.5 backdrop-blur-md"
       role="group"
       aria-label="Language"
     >
@@ -40,13 +42,20 @@ export function LangSwitcher({ active }: { active: Locale }) {
             href={hrefFor(loc)}
             aria-current={isActive ? "true" : undefined}
             className={cn(
-              "rounded-full px-3 py-1 font-mono text-xs tracking-wider transition-colors",
-              isActive
-                ? "bg-ion/15 text-ion"
-                : "text-dust hover:text-starlight",
+              "relative rounded-full px-3 py-1 font-mono text-[11px] uppercase tracking-meta outline-none transition-colors duration-300 ease-standard",
+              "focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
+              isActive ? "text-ion" : "text-dust hover:text-starlight",
             )}
           >
-            {localeLabels[loc]}
+            {isActive && (
+              <motion.span
+                layoutId="langActivePill"
+                aria-hidden
+                transition={{ duration: 0.32, ease: EASE_STANDARD }}
+                className="absolute inset-0 rounded-full bg-control-selected"
+              />
+            )}
+            <span className="relative z-10">{localeLabels[loc]}</span>
           </Link>
         );
       })}

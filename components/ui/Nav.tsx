@@ -6,7 +6,7 @@ import { useDictionary } from "@/i18n/dictionary-context";
 import { LangSwitcher } from "./LangSwitcher";
 import { cn } from "@/lib/cn";
 
-/** Floating glass top nav: wordmark + language switcher. Condenses on scroll. */
+/** Floating glass top nav: wordmark + language switcher. Glass deepens on scroll. */
 export function Nav() {
   const { dict, locale } = useDictionary();
   const [scrolled, setScrolled] = useState(false);
@@ -22,15 +22,20 @@ export function Nav() {
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 sm:px-6">
       <nav
         className={cn(
-          "flex w-full max-w-6xl items-center justify-between rounded-full border border-white/[0.08] px-5 py-3 transition-all duration-500 sm:px-6 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.07),0_10px_30px_-14px_rgba(0,0,0,0.6)]",
+          "flex w-full max-w-6xl items-center justify-between rounded-full border px-5 py-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-standard sm:px-6",
           scrolled
-            ? "border-white/[0.1] bg-void/70 backdrop-blur-xl [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.09),0_14px_38px_-16px_rgba(0,0,0,0.72)]"
-            : "bg-white/[0.025] backdrop-blur-md",
+            ? "border-white/10 bg-void/70 shadow-nav-scrolled backdrop-blur-xl"
+            : "border-hairline bg-glass-1 shadow-nav backdrop-blur-md",
         )}
       >
         <Link
           href={`/${locale}`}
-          className="font-display text-lg font-semibold tracking-[0.2em] text-starlight"
+          className={cn(
+            "rounded-md font-display text-lg font-semibold tracking-wordmark text-starlight outline-none",
+            "[text-shadow:0_0_0_rgba(94,230,255,0)] transition-[color,text-shadow] duration-300 ease-standard",
+            "hover:text-white hover:[text-shadow:0_0_18px_rgba(94,230,255,0.22)]",
+            "focus-visible:ring-2 focus-visible:ring-ion/50 focus-visible:ring-offset-2 focus-visible:ring-offset-void",
+          )}
         >
           {dict.brand.name}
         </Link>

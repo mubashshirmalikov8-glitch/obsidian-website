@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  images: {
+    // Modern formats for the optimized team portraits (AVIF preferred, WebP fallback).
+    formats: ["image/avif", "image/webp"],
+  },
   async redirects() {
     return [
       // Default locale: send the bare root to Uzbek.
