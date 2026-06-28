@@ -4,6 +4,8 @@ import { Unbounded, Manrope, JetBrains_Mono } from "next/font/google";
 import "../globals.css";
 import { locales, defaultLocale, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { SITE_URL } from "@/lib/site";
+import { organizationJsonLd, courseJsonLd } from "@/lib/structured-data";
 import { DictionaryProvider } from "@/i18n/dictionary-context";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { Backdrop } from "@/components/ui/Backdrop";
@@ -32,6 +34,12 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+const OG_LOCALE: Record<Locale, string> = {
+  uz: "uz_UZ",
+  ru: "ru_RU",
+  en: "en_US",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -40,20 +48,35 @@ export async function generateMetadata({
   const { locale } = await params;
   const loc = isLocale(locale) ? locale : defaultLocale;
   const dict = await getDictionary(loc);
+
+  const languages: Record<string, string> = {
+    uz: "/uz",
+    ru: "/ru",
+    en: "/en",
+    "x-default": `/${defaultLocale}`,
+  };
+
   return {
-    metadataBase: new URL("https://obsidian.uz"),
+    metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
     alternates: {
       canonical: `/${loc}`,
-      languages: { uz: "/uz", ru: "/ru", en: "/en" },
+      languages,
     },
     openGraph: {
-      title: dict.meta.title,
-      description: dict.meta.description,
+      type: "website",
       url: `/${loc}`,
       siteName: "OBSIDIAN",
-      type: "website",
+      title: dict.meta.title,
+      description: dict.meta.description,
+      locale: OG_LOCALE[loc],
+      alternateLocale: locales.filter((l) => l !== loc).map((l) => OG_LOCALE[l]),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: dict.meta.title,
+      description: dict.meta.description,
     },
   };
 }
@@ -70,12 +93,32 @@ export default async function LocaleLayout({
 
   const dict = await getDictionary(locale as Locale);
 
+  const jsonLdArgs = {
+    siteUrl: SITE_URL,
+    locale,
+    name: dict.brand.name,
+    title: dict.meta.title,
+    description: dict.meta.description,
+  };
+
   return (
     <html
       lang={locale}
       className={`${display.variable} ${sans.variable} ${mono.variable} antialiased`}
     >
       <body className="min-h-screen">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd(jsonLdArgs)),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(courseJsonLd(jsonLdArgs)),
+          }}
+        />
         <DictionaryProvider dict={dict} locale={locale as Locale}>
           <AppProviders>
             <Backdrop />
