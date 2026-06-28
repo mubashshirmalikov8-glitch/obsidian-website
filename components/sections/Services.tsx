@@ -21,7 +21,7 @@ export function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: EASE_REVEAL }}
-            className="group relative w-full overflow-hidden rounded-card border border-hairline bg-glass-2 p-6 shadow-elev-1 backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3 hover:shadow-elev-2-ion sm:w-[calc(50%-0.5rem)] sm:p-7 lg:w-[calc(33.333%-0.667rem)]"
+            className="group relative w-full overflow-hidden rounded-card border border-hairline bg-glass-2 p-6 shadow-elev-1 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3 hover:shadow-elev-2-ion sm:w-[calc(50%-0.5rem)] sm:p-7 lg:w-[calc(33.333%-0.667rem)]"
           >
             <span className="flex items-center gap-2 font-mono text-[11px] tracking-label text-ion/70">
               <span className="h-px w-4 bg-ion/45 transition-[width,background-color] duration-500 ease-standard group-hover:w-6 group-hover:bg-ion/80" />

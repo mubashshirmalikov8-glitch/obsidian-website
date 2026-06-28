@@ -71,7 +71,7 @@ export function Results() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: i * 0.08, ease: EASE_REVEAL }}
-            className="group relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-stat border border-hairline bg-glass-2 p-6 text-center shadow-elev-1 backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3 hover:shadow-elev-2-ion sm:min-h-[176px] sm:p-8"
+            className="group relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-stat border border-hairline bg-glass-2 p-6 text-center shadow-elev-1 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3 hover:shadow-elev-2-ion sm:min-h-[176px] sm:p-8"
           >
             {/* soft top light */}
             <div

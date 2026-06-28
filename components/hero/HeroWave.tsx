@@ -63,6 +63,11 @@ export function HeroWave({ className }: { className?: string }) {
     let height = 0;
     let raf = 0;
     let resizeScheduled = false;
+    let onScreen = true; // paused via IntersectionObserver when scrolled away
+    // Cap the ambient wave to ~30fps. It drifts so slowly that 30 and 60fps are
+    // visually identical, but this halves the per-frame canvas work (esp. mobile).
+    const FRAME_MS = 1000 / 30;
+    let lastDraw = 0;
     // Cached gradients (rebuilt only on resize, never per frame).
     let strokeGrad: CanvasGradient | null = null;
     let glowGrad: CanvasGradient | null = null;
@@ -146,16 +151,21 @@ export function HeroWave({ className }: { className?: string }) {
     }
 
     function loop(now: number) {
-      render(now);
+      if (now - lastDraw >= FRAME_MS) {
+        lastDraw = now;
+        render(now);
+      }
       raf = requestAnimationFrame(loop);
     }
 
     function start() {
       cancelAnimationFrame(raf);
-      if (reduceMq.matches || document.hidden) {
-        render(STATIC_TIME); // one static frame, no animation
+      if (reduceMq.matches) {
+        if (onScreen) render(STATIC_TIME); // one static frame, no animation
         return;
       }
+      // Nothing to draw while the hero is off-screen or the tab is hidden.
+      if (!onScreen || document.hidden) return;
       raf = requestAnimationFrame(loop);
     }
 
@@ -165,7 +175,8 @@ export function HeroWave({ className }: { className?: string }) {
       requestAnimationFrame(() => {
         resizeScheduled = false;
         applySize();
-        if (reduceMq.matches || document.hidden) render(STATIC_TIME);
+        // Repaint immediately when visible so a resize never flashes blank.
+        if (onScreen) render(reduceMq.matches ? STATIC_TIME : performance.now());
       });
     }
 
@@ -179,6 +190,21 @@ export function HeroWave({ className }: { className?: string }) {
 
     const ro = new ResizeObserver(onResize);
     ro.observe(canvas.parentElement ?? canvas);
+
+    // Pause the rAF loop entirely while the hero is scrolled out of view — the
+    // single biggest scroll win, since the wave only matters when it's visible.
+    const io = new IntersectionObserver(
+      (entries) => {
+        const vis = entries[0]?.isIntersecting ?? true;
+        if (vis === onScreen) return;
+        onScreen = vis;
+        if (onScreen) start();
+        else cancelAnimationFrame(raf);
+      },
+      { rootMargin: "120px" }, // resume just before it scrolls back in (no pop-in)
+    );
+    io.observe(canvas.parentElement ?? canvas);
+
     window.addEventListener("resize", onResize, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     reduceMq.addEventListener("change", start);
@@ -186,6 +212,7 @@ export function HeroWave({ className }: { className?: string }) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMq.removeEventListener("change", start);

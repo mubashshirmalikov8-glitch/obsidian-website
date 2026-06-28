@@ -86,7 +86,7 @@ function TeamCard({
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay, ease: EASE_REVEAL }}
       className={cn(
-        "group relative w-full overflow-hidden rounded-card border border-hairline bg-glass-2 shadow-elev-1 backdrop-blur-xl transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard",
+        "group relative w-full overflow-hidden rounded-card border border-hairline bg-glass-2 shadow-elev-1 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-standard",
         "hover:-translate-y-1.5 hover:border-hairline-strong hover:bg-glass-3",
         flagship ? "hover:shadow-elev-2-ember" : "hover:shadow-elev-2-ion",
         "sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]",
