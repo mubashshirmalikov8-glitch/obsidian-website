@@ -13,6 +13,7 @@ import { Nav } from "@/components/ui/Nav";
 import { Footer } from "@/components/ui/Footer";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MobileCta } from "@/components/ui/MobileCta";
+import { VisitorTracker } from "@/components/analytics/VisitorTracker";
 
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -127,6 +128,7 @@ export default async function LocaleLayout({
             <Footer />
             <MobileCta />
             <GrainOverlay />
+            <VisitorTracker />
           </AppProviders>
         </DictionaryProvider>
       </body>

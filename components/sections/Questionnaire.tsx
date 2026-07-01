@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/cn";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { useLeadIntent } from "@/lib/lead-intent";
+import { getVisitorId } from "@/lib/visitor";
 import { track } from "@/lib/analytics";
 import { EASE_REVEAL } from "@/lib/motion";
 
@@ -119,8 +120,13 @@ export function Questionnaire() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        // `website` is the honeypot; empty for real users, stripped server-side.
-        body: JSON.stringify({ ...(parsed.data satisfies LeadInput), website }),
+        // `website` is the honeypot; `visitor_id` links the lead to the visitor
+        // session. Both are stripped from the stored lead server-side.
+        body: JSON.stringify({
+          ...(parsed.data satisfies LeadInput),
+          website,
+          visitor_id: getVisitorId(),
+        }),
       });
       const data = (await res.json().catch(() => null)) as { ok?: boolean } | null;
       if (res.ok && data?.ok) {

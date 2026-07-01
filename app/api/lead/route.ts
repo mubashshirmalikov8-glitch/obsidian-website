@@ -70,7 +70,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, stored: false });
   }
 
-  const parsed = leadSchema.safeParse(json); // unknown keys (e.g. website) stripped
+  // visitor_id links the lead to its visitor session (stripped from the lead).
+  const visitorId =
+    typeof (json as { visitor_id?: unknown })?.visitor_id === "string"
+      ? (json as { visitor_id: string }).visitor_id
+      : null;
+
+  const parsed = leadSchema.safeParse(json); // unknown keys (website, visitor_id) stripped
   if (!parsed.success) {
     return NextResponse.json(
       { error: "validation", issues: parsed.error.flatten() },
@@ -108,7 +114,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, stored: false });
   }
 
-  let { error } = await supabase.from("leads").insert(lead);
+  let { data, error } = await supabase.from("leads").insert(lead).select("id").single();
 
   // If the DB hasn't been migrated for the intent columns yet, don't lose the
   // lead — store the core fields and warn to run the migration. (PostgREST
@@ -121,12 +127,23 @@ export async function POST(req: Request) {
     const { format: _f, tariff: _t, ...core } = lead;
     void _f;
     void _t;
-    ({ error } = await supabase.from("leads").insert(core));
+    ({ data, error } = await supabase.from("leads").insert(core).select("id").single());
   }
 
   if (error) {
     console.error("[lead] insert failed:", error.message);
     return NextResponse.json({ error: "db_error" }, { status: 500 });
+  }
+
+  // Correlate the visitor session with this lead (best-effort — never blocks
+  // the lead if visitor_sessions isn't migrated yet or the visitor is unknown).
+  const leadId = (data as { id?: string } | null)?.id;
+  if (leadId && visitorId) {
+    const { error: linkErr } = await supabase
+      .from("visitor_sessions")
+      .update({ became_lead: true, lead_id: leadId })
+      .eq("visitor_id", visitorId);
+    if (linkErr) console.warn("[lead] visitor session link skipped:", linkErr.message);
   }
 
   return NextResponse.json({ ok: true, stored: true });
