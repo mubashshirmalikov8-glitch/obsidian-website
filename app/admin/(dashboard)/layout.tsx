@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/admin-auth";
+import { AdminNav } from "@/components/admin/AdminNav";
 import { signOutAction } from "./actions";
 
 // Auth-gated + per-request (reads the session cookie): never prerender.
@@ -40,23 +41,7 @@ export default async function DashboardLayout({
       </header>
 
       <div className="flex flex-1">
-        <nav className="hidden w-56 shrink-0 border-r border-hairline p-5 md:block">
-          <ul className="space-y-1">
-            <li>
-              <span className="block rounded-lg bg-white/[0.05] px-3 py-2 text-sm text-starlight">
-                Dashboard
-              </span>
-            </li>
-            <li>
-              <span className="block rounded-lg px-3 py-2 text-sm text-dust-dim">
-                Leads
-                <span className="ml-2 font-mono text-[9px] uppercase tracking-label text-muted">
-                  soon
-                </span>
-              </span>
-            </li>
-          </ul>
-        </nav>
+        <AdminNav />
         <main className="flex-1 p-6 sm:p-10">{children}</main>
       </div>
     </div>
