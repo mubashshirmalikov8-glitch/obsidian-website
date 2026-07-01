@@ -2,7 +2,8 @@ import { createBrowserClient } from "@supabase/ssr";
 
 /**
  * Supabase browser client (ANON/publishable key). Used only by the admin
- * login form to call auth.signInWithPassword. Never uses the service-role key.
+ * login form to start Google OAuth (auth.signInWithOAuth). Never uses the
+ * service-role key.
  */
 export function createSupabaseBrowserClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

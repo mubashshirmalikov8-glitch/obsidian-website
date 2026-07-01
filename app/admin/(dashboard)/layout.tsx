@@ -1,25 +1,20 @@
-import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
+import { requireAdmin } from "@/lib/admin-auth";
 import { signOutAction } from "./actions";
 
 // Auth-gated + per-request (reads the session cookie): never prerender.
 export const dynamic = "force-dynamic";
 
 /**
- * Guarded admin shell. Server-side session check (defense in depth with
- * proxy.ts): no session → redirect to /admin/login. Invite-only, so any
- * authenticated user is an admin at this stage.
+ * Guarded admin shell. requireAdmin() verifies the Google session AND the
+ * admins allowlist (active) on every request; non-admins are signed out and
+ * bounced to the access-denied screen.
  */
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/admin/login");
+  const { user } = await requireAdmin();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -62,7 +57,6 @@ export default async function DashboardLayout({
             </li>
           </ul>
         </nav>
-
         <main className="flex-1 p-6 sm:p-10">{children}</main>
       </div>
     </div>

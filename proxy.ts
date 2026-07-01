@@ -11,14 +11,17 @@ import { NextResponse, type NextRequest } from "next/server";
  *  - Redirect already-authenticated users away from /admin/login → /admin.
  */
 export async function proxy(request: NextRequest) {
-  const isLogin = request.nextUrl.pathname === "/admin/login";
+  const { pathname } = request.nextUrl;
+  const isLogin = pathname === "/admin/login";
+  // The OAuth callback must run without a session (it establishes one).
+  const isPublicAdmin = isLogin || pathname.startsWith("/admin/auth");
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // Auth not configured yet → keep the admin area locked (allow only the login page).
+  // Auth not configured yet → keep the admin area locked (allow login + callback).
   if (!url || !anonKey) {
-    if (!isLogin) return NextResponse.redirect(new URL("/admin/login", request.url));
+    if (!isPublicAdmin) return NextResponse.redirect(new URL("/admin/login", request.url));
     return NextResponse.next({ request });
   }
 
@@ -43,7 +46,7 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !isLogin) {
+  if (!user && !isPublicAdmin) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
   if (user && isLogin) {
